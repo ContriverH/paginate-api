@@ -18,20 +18,50 @@ const users = [
   { id: 14, name: "user 14" },
 ];
 
-app.get("/users", (req, res) => {
-  const page = parseInt(req.query.page);
-  const limit = parseInt(req.query.limit);
+const posts = [
+  { id: 1, name: "post 1" },
+  { id: 2, name: "post 2" },
+  { id: 3, name: "post 3" },
+  { id: 4, name: "post 4" },
+  { id: 5, name: "post 5" },
+  { id: 6, name: "post 6" },
+  { id: 7, name: "post 7" },
+  { id: 8, name: "post 8" },
+  { id: 9, name: "post 9" },
+  { id: 10, name: "post 10" },
+  { id: 11, name: "post 11" },
+  { id: 12, name: "post 12" },
+  { id: 13, name: "post 13" },
+  { id: 14, name: "post 14" },
+];
 
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-
-  const results = {};
-
-  if (startIndex > 0) results.prev = { page: page - 1, limit: limit };
-  if (endIndex < users.length) results.next = { page: page + 1, limit: limit };
-
-  results.result = users.slice(startIndex, endIndex);
-  res.json(results);
+app.get("/posts", paginatedResult(posts), (req, res) => {
+  res.send(res.paginatedResult);
 });
+
+app.get("/users", paginatedResult(users), (req, res) => {
+  res.json(res.paginatedResult);
+});
+
+function paginatedResult(model) {
+  return (req, res, next) => {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    const results = {};
+
+    if (startIndex > 0) results.prev = { page: page - 1, limit: limit };
+    if (endIndex < model.length)
+      results.next = { page: page + 1, limit: limit };
+
+    results.result = model.slice(startIndex, endIndex);
+
+    res.paginatedResult = results;
+    next();
+  };
+}
 
 app.listen(3000);
