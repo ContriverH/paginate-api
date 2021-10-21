@@ -1,0 +1,26 @@
+{
+  "name": "pagination-api",
+  "version": "1.0.0",
+  "description": "Going forward and backward on different pages using API and MongoDB database.",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContriverH/pagination-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ContriverH/pagination-api/issues"
+  },
+  "homepage": "https://github.com/ContriverH/pagination-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
